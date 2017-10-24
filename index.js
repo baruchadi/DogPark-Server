@@ -27,6 +27,8 @@ function newConnection(socket) {
 
   socket.on("disconnect", function() {
     console.log("Got disconnect!");
+    data = {id:socket.id}
+    socket.broadcast.emit("dogDC", data);
     delete allClients[socket.id];
   });
 
@@ -41,14 +43,18 @@ function newConnection(socket) {
   function moveDog(data) {
     console.log("dog is moving");
     data.id = socket.id;
-    allClients[socket.id] = data;
+    allClients[socket.id].x=data.x;
+    allClients[socket.id].y=data.y;
+    allClients[socket.id].anim=data.anim;
     socket.broadcast.emit("dogMoved", data);
   }
 
   function sitDog(data) {
     console.log("Dog is sitting.");
     data.id = socket.id;
-    allClients[socket.id] = data;
+    allClients[socket.id].x=data.x;
+    allClients[socket.id].y=data.y;
+    allClients[socket.id].anim=data.anim;
     socket.broadcast.emit("sitDog", data);
   }
 }
