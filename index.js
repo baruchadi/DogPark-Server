@@ -6,7 +6,7 @@ var app = express();
 app.use(express.static('public'))
 // Create an http server with Node's HTTP module.
 // Pass it the Express application, and listen on port 8080.
-var server = app.listen(3000);
+var server = app.listen(process.env.PORT || 3000);
 
 // Instantiate Socket.IO hand have it listen on the Express/HTTP server
 var socket = require("socket.io");
