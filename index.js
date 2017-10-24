@@ -1,20 +1,29 @@
 var express = require("express");
+var app = express.createServer(express.logger());
+var io = require("socket.io").listen(app);
+// var io = socket.listen(server);
+app.use(express.static(__dirname+"/public"));
 
-// Create a new Express application
-var app = express();
+// app.use(express.static('public'))
+// // Create an http server with Node's HTTP module.
+// // Pass it the Express application, and listen on port 8080.
+// var server = require('http').createServer(app);
 
-app.use(express.static('public'))
-// Create an http server with Node's HTTP module.
-// Pass it the Express application, and listen on port 8080.
-var server = require('http').createServer(app);
+// server.listen(process.env.PORT || 3000);
+// // Instantiate Socket.IO hand have it listen on the Express/HTTP server
+// var socket = require("socket.io");
+// var io = socket.listen(server);
 
-server.listen(process.env.PORT || 3000);
+io.configure(function(){
+    io.set("transports",["xhr-polling"]);
+    io.set("polling duration",10);
+})
 var port = process.env.PORT || 3000;
-// Instantiate Socket.IO hand have it listen on the Express/HTTP server
-var socket = require("socket.io");
-var io = socket.listen(server);
-
-console.log(`server started, socket open at ${port}...`);
+app.listen(port,function(){
+    
+    console.log(`server started, socket open at ${port} in ${app.settings.env} mode...`);
+    
+})
 
 io.sockets.on("connection", newConnection);
 
