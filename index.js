@@ -3,6 +3,7 @@ var express = require("express");
 // Create a new Express application
 var app = express();
 
+app.use(express.static('public'))
 // Create an http server with Node's HTTP module.
 // Pass it the Express application, and listen on port 8080.
 var server = app.listen(3000);
