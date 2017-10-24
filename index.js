@@ -17,7 +17,7 @@ var clients = {};
 console.log(`server started, socket open at ${port}...`);
 
 io.sockets.on("connection", newConnection);
-
+var allClients = {};
 function newConnection(socket) {
   console.log("new connection: " + socket.id);
   
@@ -29,9 +29,7 @@ function newConnection(socket) {
 
   socket.on("disconnect", function() {
     console.log("Got disconnect!");
-
-    var i = allClients.indexOf(socket);
-    allClients.splice(i, 1);
+    delete allClients[socket.id];
   });
 
   function sendNewDog(data) {
