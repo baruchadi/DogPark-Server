@@ -35,8 +35,10 @@ function newConnection(socket) {
   function sendNewDog(data) {
     console.log("DogJoined");
     data.id = socket.id;
+    socket.broadcast.emit("recDogs",allClients)
     allClients[socket.id] = data;
     socket.broadcast.emit("dogJoined", data);
+
   }
 
   function moveDog(data) {
