@@ -24,16 +24,21 @@ function newConnection(socket) {
   socket.on("stay", sitDog);
 
   function sendNewDog(data) {
+    console.log("DogJoined");
     data.id = socket.id;
     socket.broadcast.emit("dogJoined", data);
   }
 
   function moveDog(data) {
+      
+    console.log("dog is moving");
     data.id = socket.id;
     socket.broadcast.emit("dogMoved", data);
   }
 
   function sitDog(data) {
+      
+    console.log("Dog is sitting.");
     data.id = socket.id;
     socket.broadcast.emit("sitDog", data);
   }
